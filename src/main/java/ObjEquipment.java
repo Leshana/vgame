@@ -1,0 +1,53 @@
+///////////////////////////////////////////////////////////////////////////////////////////////////
+//
+// ObjEquipment.java
+//
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+import java.awt.*;
+import javax.swing.*;
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+public abstract class ObjEquipment extends ObjInventaire
+{
+	///////////////////////////////////////////////////////////////////////////////////////////////
+	public ObjEquipment( PlayerStat m, int obj )
+	{
+		super( m, obj );
+	}
+
+	///////////////////////////////////////////////////////////////////////////////////////////////
+	@Override // ObjetInventaire
+	public String getUseString()
+	{
+		if( equipped )
+		{
+			return "Unequip";
+		}
+
+		return "Equip";
+	}
+	
+	@Override // ObjetInventaire
+	public boolean isEquippable()
+	{
+		return true;
+	}
+	
+	@Override // ObjetInventaire
+	public void dispose()
+	{
+		unequip();
+		super.dispose();
+	}
+
+	@Override // ObjetInventaire
+	public void changerBonus( int bonusID )
+	{
+		StatChar temp = bonus.mere;
+		if( bonusID != 0 )
+		{
+			bonus = new Bonus( bonusID, temp );
+		}
+	}
+}
