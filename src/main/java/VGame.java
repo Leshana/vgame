@@ -14,6 +14,9 @@ public class VGame
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	public static void main( String[] args )
 	{
+                // First things first, try and load the game data!
+                DataUtil.loadStaticGameData();
+            
 		try
 		{
 			// Sets the look and feel to whatever is appropriate for the user's OS... but will

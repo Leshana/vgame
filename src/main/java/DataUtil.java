@@ -1,7 +1,12 @@
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.*;
 import java.sql.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 class GameData implements Serializable
 {
@@ -37,10 +42,27 @@ public class DataUtil
 {
 	private static GameData gameData;
 	
-	static
+	public static void loadStaticGameData()
 	{
-		String dataFile = "VGame.dat";
-		gameData = readObject( dataFile );
+                // Try 1 - Load from gamedata folder if it exists.
+                Path gdFolder = Paths.get("gamedata");
+                try {
+                    if (Files.exists(gdFolder)) {
+                        DataToJson exporter = new DataToJson(gdFolder);
+                        gameData = exporter.loadGameData();
+                        return;
+                    }
+                } catch (IOException ex) {
+                    Logger.getLogger(DataUtil.class.getName()).log(Level.SEVERE, null, ex);
+                    System.exit(1);
+                }
+                
+                // Try 2 - Load from VGame.dat if it exists
+                Path vgameDatFile = Paths.get("VGame.dat");
+                String dataFile = vgameDatFile.toString();
+                if (Files.exists(vgameDatFile)) {
+                    gameData = readObject( dataFile );
+                }
 		
 		if (gameData == null)
 		{
@@ -57,6 +79,18 @@ public class DataUtil
 				writeObject( dataFile, gameData );
 			}
 		}
+                
+                if (gameData != null) {
+                    System.out.println("Exporting VGameDat to gamedata folder");
+                    try {
+                        Files.createDirectories(gdFolder);
+                        DataToJson exporter = new DataToJson(gdFolder);
+                        exporter.saveGameData(gameData);
+                    } catch (IOException ex) {
+                        Logger.getLogger(DataUtil.class.getName()).log(Level.SEVERE, null, ex);
+                        System.exit(1);
+                    }
+                }
 		
 		/*
 		if (gameData != null)

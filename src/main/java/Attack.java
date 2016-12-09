@@ -4,6 +4,7 @@
  * Created on 25 octobre 2005, 10:11
  */
  
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.*;
 import java.util.*;
 import java.applet.*;
@@ -14,30 +15,42 @@ import java.applet.*;
 
 class AttackData implements Serializable
 {
-	int AttackID;
-	int StatCarID;
+    	public int AttackID;
+        public int StatCarID;
 
-	int ToucheBonus;
-	int DommageMin;
-	int DommageMax;
-	int DommageBonus;
-	int TypeDommage;
-	int Range;
-	int Vchance;
-	int VBonus;
-	int Chance;
-	String SonAttaque;
-	int ProjectileID;
-	int ChanceEffect;
-	int BonusID;
-	int TimeMin;
-	int TimeMax;
-	int TimeBonus;
-	int TypeResist;
-	int EventID;
-	int Save;
-	int MPCost;
-	int typeVore;
+        public int ToucheBonus;
+        public int DommageMin;
+        public int DommageMax;
+        public int DommageBonus;
+        public int TypeDommage;
+        public int Range;
+        public int Vchance;
+        public int VBonus;
+        public int Chance;
+        public String SonAttaque;
+        public int ProjectileID;
+        public int ChanceEffect;
+        public int BonusID;
+        public int TimeMin;
+        public int TimeMax;
+        public int TimeBonus;
+        public int TypeResist;
+        public int EventID;
+        public int Save;
+        public int MPCost;
+        public int typeVore;
+        
+        private static final long serialVersionUID = -358760665630507469L;
+
+        @JsonIgnore
+        public int getAttackID() {
+            return AttackID;
+        }
+
+        @JsonIgnore
+        public int getStatCarID() {
+            return StatCarID;
+        }   
 }
 
 public class Attack
